@@ -5,6 +5,7 @@
     		<div class="sidebar-container">
     			<Sidebar />
     		</div>
+        <AppMain />
     	</div>
     </div>
 </template>
@@ -12,11 +13,13 @@
 <script>
 	import Navbar from './Navbar'
 	import Sidebar from './Sidebar'
+  import AppMain from './AppMain'
 	export default {
 		name: 'layout',
 		components: {
 			Navbar,
-			Sidebar
+			Sidebar,
+      AppMain
 		}
 	}
 </script>
@@ -28,7 +31,6 @@
 		position: relative;
 		height: 100%;
 		width: 100%;
-
 		.content {
 			width:100%;
 			height:100%;
@@ -42,7 +44,7 @@
 				z-index:2;
 				overflow-x:hidden;
 				transition: all .28s ease-out;
-            	@include scrollBar;
+        @include scrollBar;
 			}
 		}
 
