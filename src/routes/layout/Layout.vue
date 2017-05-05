@@ -5,7 +5,8 @@
     		<div class="sidebar-container">
     			<Sidebar />
     		</div>
-        <AppMain />
+			<Levelbar />
+			<AppMain />
     	</div>
     </div>
 </template>
@@ -13,13 +14,15 @@
 <script>
 	import Navbar from './Navbar'
 	import Sidebar from './Sidebar'
-  import AppMain from './AppMain'
+  	import AppMain from './AppMain'
+  	import Levelbar from './Levelbar'
 	export default {
 		name: 'layout',
 		components: {
 			Navbar,
 			Sidebar,
-      AppMain
+			Levelbar,
+      		AppMain
 		}
 	}
 </script>
