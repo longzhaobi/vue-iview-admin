@@ -4,13 +4,19 @@
     </div>
 </template>
 <script>
-  import EditorDashboard from './editor/index';
+  import MapDashboard from './map/index';
   export default {
     name: 'dashboard',
     data() {
       return {
-        currentRole: EditorDashboard
+        currentRole: MapDashboard
       }
     }
   }
 </script>
+
+<style rel="stylesheet/scss" lang="scss" scoped>
+  .normal {
+    height:100%;
+  }
+</style>

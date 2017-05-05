@@ -16,6 +16,9 @@
 	import Sidebar from './Sidebar'
   	import AppMain from './AppMain'
   	import Levelbar from './Levelbar'
+
+  	import store from '@/store';
+    import router from '@/router';	
 	export default {
 		name: 'layout',
 		components: {

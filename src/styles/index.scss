@@ -1,11 +1,16 @@
 @import './btn.scss';
 @import './iview-ui.scss';
 @import "./mixin.scss";
-body {
+html, body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+}
+
+
+.app-main {
+  height: calc(100vh - 90px);
 }
 
 label {
