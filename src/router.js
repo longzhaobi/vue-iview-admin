@@ -5,7 +5,7 @@ import Login from '@/routes/login/Index'
 
 import Layout from '@/routes/layout/Layout'
 
-// dashboard
+// dashboard首页
 const dashboard = resolve => require(['./routes/dashboard/index'], resolve);
 
 Vue.use(Router)
