@@ -1,7 +1,7 @@
 <template>
   <div class="amap-page-container">
     <el-amap :vid="'amap-vue'" :center="center" :zoom="zoom" :map-manager="amapManager" :plugin="plugin" :events="events">
-       <el-amap-marker v-for="marker in markers" :position="marker"></el-amap-marker>
+       <el-amap-marker v-for="marker in markers" :key="marker" :position="marker"></el-amap-marker>
     </el-amap>
     <!-- <button v-on:click="getMap">get map</button>
     <button type="button" name="button" v-on:click="addZoom">zoom++</button>
@@ -71,7 +71,7 @@ export default {
 };
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
+<style scoped>
 	.amap-page-container {
 		height:100%;
 	}

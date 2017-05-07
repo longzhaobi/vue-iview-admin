@@ -30,29 +30,31 @@
 	}
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
-	@import "src/styles/mixin.scss";
+<style scoped>
 	.normal {
-		@include clearfix;
 		position: relative;
 		height: 100%;
 		width: 100%;
-		.content {
-			width:100%;
-			height:100%;
-			padding-left: 180px;
-			.sidebar-container {
-				position: fixed;
-				width:180px;
-				top:60px;
-				left:0px;
-				bottom:0px;
-				z-index:2;
-				overflow-x:hidden;
-				transition: all .28s ease-out;
-        @include scrollBar;
-			}
-		}
 
+	}
+	.normal:after {
+	    content: "";
+	    display: table;
+	    clear: both;
+	}
+	.content {
+		width:100%;
+		height:100%;
+		padding-left: 180px;
+	}
+	.sidebar-container {
+		position: fixed;
+		width:180px;
+		top:60px;
+		left:0px;
+		bottom:0px;
+		z-index:2;
+		overflow-x:hidden;
+		transition: all .28s ease-out;
 	}
 </style>

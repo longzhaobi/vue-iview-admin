@@ -34,19 +34,19 @@
 		name: 'Sidebar'
 	}
 </script>
-<style rel="stylesheet/scss" lang="scss" scoped>
+<style scoped>
     .menu {
         min-height: 100%;
-				.switchBar {
-					height:30px;
-					width: 100%;
-					display: block;
-					line-height: 30px;
-					text-align: center;
-					color: #efefef;
-					font-size:12px;
-					cursor: pointer;
-					background-color: rgb(57,69,85);
-				}
     }
+    .switchBar {
+		height:30px;
+		width: 100%;
+		display: block;
+		line-height: 30px;
+		text-align: center;
+		color: #efefef;
+		font-size:12px;
+		cursor: pointer;
+		background-color: rgb(57,69,85);
+	}
 </style>

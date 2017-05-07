@@ -44,34 +44,35 @@
     }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
+<style scoped>
     .layout {
         background: #f5f7f9;
-        .layout-logo {
-            width: 100px;
-            height:30px;
-            background: #5b6270;
-            border-radius: 3px;
-            float: left;
-            position: relative;
-            top: 15px;
-            left: 20px;
-            color:#fff;
-            line-height:30px;
-        }
-        .layout-nav {
-            float: right;
-        }
-        .layout-logout {
-            width: 100px;
-            height:30px;
-            background: #5b6270;
-            border-radius: 3px;
-            float: right;
-            position: relative;
-            top: 15px;
-            line-height:30px;
-            color:#fff;
-        }
+    }
+
+    .layout-logo {
+        width: 100px;
+        height:30px;
+        background: #5b6270;
+        border-radius: 3px;
+        float: left;
+        position: relative;
+        top: 15px;
+        left: 20px;
+        color:#fff;
+        line-height:30px;
+    }
+    .layout-nav {
+        float: right;
+    }
+    .layout-logout {
+        width: 100px;
+        height:30px;
+        background: #5b6270;
+        border-radius: 3px;
+        float: right;
+        position: relative;
+        top: 15px;
+        line-height:30px;
+        color:#fff;
     }
 </style>

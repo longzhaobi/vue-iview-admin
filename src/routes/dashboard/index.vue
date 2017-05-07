@@ -15,7 +15,7 @@
   }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
+<style scoped>
   .normal {
     height:100%;
   }

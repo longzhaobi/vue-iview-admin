@@ -5,4 +5,4 @@
 	
 </script>
 
-<style rel=""></style>
+<style></style>

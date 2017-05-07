@@ -7,7 +7,7 @@ import router from './router'
 import iView from 'iview';
 import AMap from 'vue-amap';
 import 'iview/dist/styles/iview.css';
-import '@/styles/index.scss';
+import '@/styles/index.css';
 
 Vue.use(iView);
 Vue.use(AMap);
