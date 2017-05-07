@@ -1,3 +1,6 @@
 const getters = {
-	roles: state => state.user.roles
+	user: state => state.user.user,
+	menus: state => state.user.menus
 }
+
+export default getters

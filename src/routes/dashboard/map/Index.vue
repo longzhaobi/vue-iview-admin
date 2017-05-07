@@ -36,7 +36,7 @@ export default {
         defaultType: 0,
         events: {
           init(o) {
-            console.log(o);
+            // console.log(o);
           }
         }
       }],

@@ -1,9 +1,9 @@
 <template>
     <div class="layout">
         <Menu mode="horizontal" theme="primary" active-name="1">
-            <div class="layout-logo">logo</div>
+            <div class="layout-logo">综合权限管理系统</div>
             <div class="layout-logout">
-            右边设置
+              欢迎您：{{user.username}}
             </div>
             <div class="layout-nav">
                 <Menu-item name="1">
@@ -39,8 +39,14 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex';
     export default {
-        name: 'Navbar'
+        name: 'Navbar',
+        computed: {
+          ...mapGetters([
+            'user'
+          ])
+        }
     }
 </script>
 
@@ -50,8 +56,9 @@
     }
 
     .layout-logo {
-        width: 100px;
+        /*width: 100px;*/
         height:30px;
+        padding:0px 10px 0px 10px;
         background: #5b6270;
         border-radius: 3px;
         float: left;
@@ -65,7 +72,7 @@
         float: right;
     }
     .layout-logout {
-        width: 100px;
+        padding:0px 10px 0px 10px;
         height:30px;
         background: #5b6270;
         border-radius: 3px;

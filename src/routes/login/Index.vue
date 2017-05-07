@@ -1,19 +1,17 @@
 <template>
     <div class="login-container">
-      <Form class="card-box login-form">
+      <Form class="login-form" ref="loginForm" :rules="loginRules" :model="loginForm">
         <h3 class="title">系统登录</h3>
         <Form-item prop="user">
-          <Input type="text" v-model="loginForm.email" placeholder="Username">
-              <Icon type="ios-person-outline" slot="prepend"></Icon>
+          <Input type="text" v-model="loginForm.account" placeholder="用户帐号">
           </Input>
         </Form-item>
         <Form-item prop="password">
-            <Input type="password" v-model="loginForm.password" placeholder="Password">
-                <Icon type="ios-locked-outline" slot="prepend"></Icon>
+            <Input type="password" v-model="loginForm.password" placeholder="用户密码">
             </Input>
         </Form-item>
         <Form-item>
-            <Button type="primary" @click="handleSubmit('loginForm')">登录</Button>
+            <Button type="primary" :loading="loading" @click="handleSubmit('loginForm')" long size="large">登录</Button>
         </Form-item>
       </Form>
     </div>
@@ -21,39 +19,22 @@
 
 <script>
     import { mapGetters } from 'vuex';
-    import { isWscnEmail } from '@/utils/validate';
-    // import { getQueryObject } from 'utils';
-    // import socialSign from './socialsignin';
-
+    import cookie from 'js-cookie';
     export default {
-      // components: { socialSign },
       name: 'login',
       data() {
-        const validateEmail = (rule, value, callback) => {
-          if (!isWscnEmail(value)) {
-            callback(new Error('请输入正确的合法邮箱'));
-          } else {
-            callback();
-          }
-        };
-        const validatePass = (rule, value, callback) => {
-          if (value.length < 6) {
-            callback(new Error('密码不能小于6位'));
-          } else {
-            callback();
-          }
-        };
         return {
           loginForm: {
-            email: 'admin@qq.com',
+            account: 'admin@qq.com',
             password: ''
           },
           loginRules: {
             email: [
-                { required: true, trigger: 'blur', validator: validateEmail }
+                { required: true, trigger: 'blur', message:'请输入帐号' }
             ],
             password: [
-                { required: true, trigger: 'blur', validator: validatePass }
+                { required: true, trigger: 'blur', message: '请输入密码' },
+                { type: 'string', min: 6, message: '密码长度不能小于6位', trigger: 'blur' }
             ]
           },
           loading: false,
@@ -66,41 +47,33 @@
         ])
       },
       methods: {
-        handleLogin() {
-          this.$refs.loginForm.validate(valid => {
-            if (valid) {
+        handleSubmit(name) {
+          this.$refs[name].validate((valid) => {
+            if(valid) {
               this.loading = true;
-              this.$store.dispatch('LoginByEmail', this.loginForm).then(() => {
+              this.$store.dispatch('DoLogin', this.loginForm).then((response) => {
+                if(response) {
+                  const {data} = response
+                  if(data && data.httpCode == 200) {
+                    const o = data.data
+                    //设置权限信息到本地
+                    localStorage.setItem('has_permissions', o.hasPermissions);
+                    //设置角色信息到本地
+                    localStorage.setItem('has_roles', o.hasRoles);
+                    //设置菜单信息到本地
+                    localStorage.setItem('has_menus', JSON.stringify(o.hasMenus));
+                    //保存token
+                    cookie.set('access_token', o.token, {expires: 7});
+
+                    this.$router.push({ path: '/' })
+                  }
+                }
                 this.loading = false;
-                this.$router.push({ path: '/' });
-                // this.showDialog = true;
-              }).catch(err => {
-                this.$message.error(err);
-                this.loading = false;
-              });
+              })
             } else {
-              console.log('error submit!!');
-              return false;
+                this.$Message.error('表单验证失败!');
             }
-          });
-        },
-        afterQRScan() {
-          // const hash = window.location.hash.slice(1);
-          // const hashObj = getQueryObject(hash);
-          // const originUrl = window.location.origin;
-          // history.replaceState({}, '', originUrl);
-          // const codeMap = {
-          //   wechat: 'code',
-          //   tencent: 'code'
-          // };
-          // const codeName = hashObj[codeMap[this.auth_type]];
-          // if (!codeName) {
-          //   alert('第三方登录失败');
-          // } else {
-          //   this.$store.dispatch('LoginByThirdparty', codeName).then(() => {
-          //     this.$router.push({ path: '/' });
-          //   });
-          // }
+          })
         }
       },
       created() {
@@ -119,9 +92,19 @@
       margin-bottom: 5px;
     }
 
+    .login-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        height: 100vh;
+        background-color: #2d3a4b;
+
+    }
+
     .login-container input {
       background: transparent;
-      border: 0px;
+      /*border: 0px;*/
+      border-radius: 5px !important;
       -webkit-appearance: none;
       border-radius: 0px;
       padding: 12px 5px 12px 15px;
@@ -129,24 +112,9 @@
       height: 47px;
     }
 
-    .login-container .el-input {
-        display: inline-block;
-        height: 47px;
-        width: 85%;
-    }
-
     .login-container input:-webkit-autofill {
       -webkit-box-shadow: 0 0 0px 1000px #293444 inset !important;
       -webkit-text-fill-color: #fff !important;
-    }
-    
-    .login-container {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        height: 100vh;
-        background-color: #2d3a4b;
-        
     }
 
     .svg-container {
