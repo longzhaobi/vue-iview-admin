@@ -14,7 +14,7 @@ export default function request(config = {}) {
   return axios.request(Object.assign(config))
   .then(checkStatus)
   .catch((error) => {
-    alert(error)
+    console.log(error)
   });
 }
 

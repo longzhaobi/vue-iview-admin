@@ -8,6 +8,21 @@ html, body {
 
 .app-main {
   height: calc(100vh - 90px);
+  display: relative;
+}
+
+.table-spin-container {
+  display: inline-block;
+  top:90px;
+  bottom:0px;
+  right:0px;
+  left:180px;
+  position: absolute;
+  border: 1px solid #eee;
+  z-index: 9999;
+  text-align: center;
+  /*line-height: calc(100vh - 90px);*/
+  background-color: rgba(255,255,255,0.8);
 }
 
 label {
