@@ -11,7 +11,7 @@
 			        	<Input v-model="keyword" icon="ios-clock-outline" placeholder="请输入条件搜索..." style="width: 300px"></Input>
 			        </Col>
 			    </Row>
-	    		
+
 	    	</div>
 	    	<div slot="footer" style="float:right" class="table-footer">
 	    		<Page :total="100" :current="1" @on-change="changePage"></Page>
@@ -34,7 +34,6 @@
                 		width:'50'
                 	},
                     {
-
                         title: '用户名',
                         key: 'username',
                         width:120
@@ -130,23 +129,12 @@
                 }
                 return data;
             },
-            formatDate (date) {
-                const y = date.getFullYear();
-                let m = date.getMonth() + 1;
-                m = m < 10 ? '0' + m : m;
-                let d = date.getDate();
-                d = d < 10 ? ('0' + d) : d;
-                return y + '-' + m + '-' + d;
-            },
-            changePage () {
-                // 这里直接更改了模拟的数据，真实使用场景应该从服务端获取数据
-                this.tableData1 = this.mockTableData1();
-            }
+
         },
         beforeRouteEnter: (to, from, next) => {
         	//后端请求数据
         	next(vm => {
-        		// vm.$store.dispatch('DoGetInfoList')
+        		vm.$store.dispatch('DoGetInfoList')
         	})
         }
     }

@@ -3,7 +3,8 @@ import cookie from 'js-cookie'
 const user = {
 	state: {
 		user: '',
-		menus:[]
+		menus:[],
+		list: []
 	},
 
 	mutations: {
@@ -34,6 +35,9 @@ const user = {
 				}
 			}
 			return false
+		},
+		async DoGetInfoList({commit}, payload) {
+			// const response = await api
 		}
 	}
 }

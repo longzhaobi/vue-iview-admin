@@ -1,9 +1,5 @@
 <template>
     <section class="app-main">
-        <div class="table-spin-container">
-          <Spin>
-            </Spin>
-          </div>
         <transition name="fade" mode="out-in">
             <router-view :key="key"></router-view>
         </transition>
