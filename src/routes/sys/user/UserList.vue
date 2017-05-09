@@ -1,6 +1,6 @@
 <template>
 	<div class="normal">
-	    <Table :context="self" height="800" border :columns="tableColumns1" stripe>
+	    <Table :context="self" height="800" :data="data" border :columns="columns" stripe>
 	    	<div slot="header" class="table-height">
 	    		<Row type="flex">
 			        <Col span="12">
@@ -22,12 +22,16 @@
 <script>
     export default {
     	name: 'UserList',
+        computed: {
+            data() {
+                return this.$store.state.user.data
+            }
+        },
         data () {
             return {
                 self: this,
                 keyword: '',
-                tableData1: this.mockTableData1(),
-                tableColumns1: [
+                columns: [
                 	{
                 		type: 'selection',
                 		title: '#',
@@ -41,7 +45,7 @@
                     {
                         title: '性别',
                         key: 'gender',
-                        width:60,
+                        width:80,
                         render (row, column, index) {
                         	return '你好'
                         }
@@ -73,7 +77,7 @@
                     },
                     {
                         title: '是否锁住',
-                        width:80,
+                        width:100,
                         key: 'locked'
                     },
                     {
@@ -102,39 +106,14 @@
             }
         },
         methods: {
-            mockTableData1 () {
-                let data = [];
-                for (let i = 0; i < 10; i++) {
-                    data.push({
-                        name: '商圈' + Math.floor(Math.random () * 100 + 1),
-                        status: Math.floor(Math.random () * 3 + 1),
-                        portrayal: ['城市渗透', '人群迁移', '消费指数', '生活指数', '娱乐指数'],
-                        people: [
-                            {
-                                n: '客群' + Math.floor(Math.random () * 100 + 1),
-                                c: Math.floor(Math.random () * 1000000 + 100000)
-                            },
-                            {
-                                n: '客群' + Math.floor(Math.random () * 100 + 1),
-                                c: Math.floor(Math.random () * 1000000 + 100000)
-                            },
-                            {
-                                n: '客群' + Math.floor(Math.random () * 100 + 1),
-                                c: Math.floor(Math.random () * 1000000 + 100000)
-                            }
-                        ],
-                        time: Math.floor(Math.random () * 7 + 1),
-                        update: new Date()
-                    })
-                }
-                return data;
-            },
+            changePage () {
+            }
 
         },
         beforeRouteEnter: (to, from, next) => {
         	//后端请求数据
         	next(vm => {
-        		vm.$store.dispatch('DoGetInfoList')
+        		vm.$store.dispatch('DoFetchUserInfo')
         	})
         }
     }
