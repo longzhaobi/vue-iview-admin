@@ -7,7 +7,7 @@ const user = {
 		data: [],
 		total: 0,
 	    current: 0,
-	    size:10,
+	    size:20,
 	    keyword:null
 	},
 
@@ -18,10 +18,11 @@ const user = {
 		SET_MENUS: (state, menus) => {
 			state.menus = menus
 		},
-		SET_DATA: (state, { data, total, current }) => {
+		SET_DATA: (state, { data, total, current, size }) => {
 			state.data = data
 			state.current = current
 			state.total = total
+			state.size = size
 		}
 	},
 	actions: {
@@ -45,23 +46,26 @@ const user = {
 			}
 			return false
 		},
-		async DoFetchUserInfo({commit}, payload) {
+		async DoFetchUserInfo({commit, state}, payload) {
 			const params = {
-				current:1,
-				size:10,
+				current:state.current,
+				size:state.size,
 				...payload
 			}
 			const response = await api.fetch(params)
 			if(response) {
 				const {data} = response;
 		        if(data) {
-		          const {total, current} = data;
-		          commit('SET_DATA', {data:data.data, total, current})
+		          const {total, current, size} = data;
+		          commit('SET_DATA', {data:data.data, total, current, size})
 		        }
 			}
 		},
 		async DoSaveUserInfo({commit}, payload) {
 			return await api.create(payload)
+		},
+		async DoRemoveUserInfo({commit}, payload) {
+			return await api.remove(payload)
 		}
 	}
 }

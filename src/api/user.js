@@ -30,3 +30,9 @@ export function create(params) {
   });
 }
 
+export function remove(params) {
+  return request({
+    url:`/api/users/${params}`,
+    method:'delete'
+  });
+}

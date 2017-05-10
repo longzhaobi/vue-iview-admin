@@ -1,17 +1,17 @@
 <template>
 	<div class="normal">
-	    <Table :height="tableHeight" :data="data" border :columns="columns" stripe>
+	    <Table :height="tableHeight" :data="data" border :columns="columns" stripe @on-selection-change="onSelectionChange">
 	    	<div slot="header" class="table-height">
 	    		<Row type="flex">
 			        <Col span="12">
                         <UserModal title="新增用户" option="create">
                             <Button type="info" icon="plus">新增</Button>
                         </UserModal>
-                        <Button type="success" icon="ios-trash">删除</Button>
+                        <Button type="success" icon="ios-trash" @click="deleteUser" :disabled="!hasSelected">删除</Button>
 			        </Col>
 			        <Col span="12" style="text-align:right; padding-right:10px;">
-                        <Select v-model="model1" style="width:80px">
-                            <Option v-for="item in cityList" :value="item" :key="item">{{ item }} 条/页</Option>
+                        <Select v-model="size" style="width:80px" @on-change="changePageSize">
+                            <Option v-for="item in sizeList" :value="item" :key="item">{{ item }} 条/页</Option>
                         </Select>
 			        	<Input v-model="keyword" icon="ios-clock-outline" placeholder="请输入条件搜索..." style="width: 300px"></Input>
 			        </Col>
@@ -19,7 +19,7 @@
 
 	    	</div>
 	    	<div slot="footer" style="float:right" class="table-footer">
-	    		<Page :total="total" :current="current" @on-change="changePage" show-elevator></Page>
+	    		<Page :total="total" :current="current" @on-change="changePage" :page-size="size" show-elevator></Page>
 	    	</div>
 	    </Table>
     </div>
@@ -40,6 +40,10 @@
             current: {
                 type:Number,
                 default:1
+            },
+            size: {
+                type:Number,
+                default: 20
             }
         },
         components: {
@@ -53,14 +57,50 @@
         methods: {
             changePage (page) {
                 this.$store.dispatch('DoFetchUserInfo', {current:page})
-            }
+            },
+            changePageSize(size) {
+                this.$store.dispatch('DoFetchUserInfo', {size, current: 1})
+            },
+            onSelectionChange(selectedRowKeys) {
+                this.selectedRowKeys = selectedRowKeys
+            },
+						deleteUser() {
+							this.$Modal.confirm({
+									title: '确认删除吗',
+									content: `确定后，将删除选择的${this.selectedRowKeys.length}条记录`,
+									onOk: () => {
+										const ids = this.selectedRowKeys.map(row => row.id_)
+										for (let i in ids) {
+											this.$store.dispatch('DoRemoveUserInfo', ids[i]).then((response) => {
+												if(response) {
+													const {data} = response;
+													if(data && data.httpCode === 200) {
+														this.$Message.success( `第${parseInt(i)+1}条删除成功`);
+													} else {
+														this.$Message.error( `第${parseInt(i)+1}条删除失败`);
+													}
+												}
+											})
+										}
+										this.$store.dispatch('DoFetchUserInfo')
+									},
+									onCancel: () => {
+											this.loading = false
+									}
+							});
+						}
 
         },
+				computed: {
+					hasSelected() {
+						return this.selectedRowKeys.length > 0
+					}
+				},
         data () {
             return {
                 keyword: '',
-                model1:"10",
-                cityList:["10","20","30"],
+                sizeList:[10,20,30],
+								selectedRowKeys:[],
                 tableHeight: document.documentElement.clientHeight - 90,
                 columns: [
                 	{

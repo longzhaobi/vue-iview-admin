@@ -1,29 +1,18 @@
-<template>
-	<UserList :data="data" :current="current" :total="total"></UserList>
-</template>
 <script>
-    import UserList from '@/components/User/UserList'
-    export default {
-    	name: 'user',
-        computed: {
-            data() {
-                return this.$store.state.user.data
-            },
-            current() {
-                return this.$store.state.user.current
-            },
-            total() {
-                return this.$store.state.user.total
-            }
-        },
-        components: {
-            UserList
-        },
-        beforeRouteEnter: (to, from, next) => {
-        	//后端请求数据
-        	next(vm => {
-        		vm.$store.dispatch('DoFetchUserInfo')
-        	})
-        }
-    }
+	import UserList from '@/components/User/UserList'
+	export default {
+		beforeRouteEnter: (to, from, next) => {
+			//后端请求数据
+			next(vm => {
+				vm.$store.dispatch('DoFetchUserInfo')
+			})
+		},
+		render(h) {
+			const {data, current, total, size} = this.$store.state.user
+
+			return (
+				<UserList data={data} current={current} total={total} size={size} />
+			)
+		}
+	}
 </script>
