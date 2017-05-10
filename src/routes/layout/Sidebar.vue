@@ -1,6 +1,6 @@
 <template>
 	<Menu class="menu" active-name="1-2" width="auto" theme="dark" :open-names="['1']">
-		<a class="switchBar"><Icon type="navicon-round"></Icon></a>
+		<a class="switchBar">系统菜单</a>
 		<Submenu v-for="menu in menus" :name="menu.name" :key="menu.id_">
 	      <template slot="title">
 	          <Icon type="ios-keypad"></Icon>
@@ -32,6 +32,7 @@
 		width: 100%;
 		display: block;
 		line-height: 30px;
+		font-weight: bold;
 		text-align: center;
 		color: #efefef;
 		font-size:12px;

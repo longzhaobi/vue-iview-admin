@@ -1,42 +1,78 @@
 <template>
 	<div class="normal">
-	    <Table :context="self" height="800" :data="data" border :columns="columns" stripe>
+	    <Table :height="tableHeight" :data="data" border :columns="columns" stripe>
 	    	<div slot="header" class="table-height">
 	    		<Row type="flex">
 			        <Col span="12">
-			        	<Button type="info" icon="plus">新增</Button>
-    					<Button type="success" icon="ios-trash">删除</Button>
+                        <UserModal title="新增用户" option="create">
+                            <Button type="info" icon="plus">新增</Button>
+                        </UserModal>
+                        <Button type="success" icon="ios-trash">删除</Button>
 			        </Col>
 			        <Col span="12" style="text-align:right; padding-right:10px;">
+                        <Select v-model="model1" style="width:80px">
+                            <Option v-for="item in cityList" :value="item" :key="item">{{ item }} 条/页</Option>
+                        </Select>
 			        	<Input v-model="keyword" icon="ios-clock-outline" placeholder="请输入条件搜索..." style="width: 300px"></Input>
 			        </Col>
 			    </Row>
 
 	    	</div>
 	    	<div slot="footer" style="float:right" class="table-footer">
-	    		<Page :total="100" :current="1" @on-change="changePage"></Page>
+	    		<Page :total="total" :current="current" @on-change="changePage" show-elevator></Page>
 	    	</div>
 	    </Table>
     </div>
 </template>
 <script>
+    import UserModal from './UserModal'
     export default {
     	name: 'UserList',
-        computed: {
-            data() {
-                return this.$store.state.user.data
+        props: {
+            data: {
+                type: Array,
+                default: []
+            },
+            total: {
+                type:Number,
+                default: 0
+            },
+            current: {
+                type:Number,
+                default:1
             }
+        },
+        components: {
+            UserModal
+        },
+        mounted() {
+            window.onresize = () => {
+                this.tableHeight = document.documentElement.clientHeight - 90
+            }
+        },
+        methods: {
+            changePage (page) {
+                this.$store.dispatch('DoFetchUserInfo', {current:page})
+            }
+
         },
         data () {
             return {
-                self: this,
                 keyword: '',
+                model1:"10",
+                cityList:["10","20","30"],
+                tableHeight: document.documentElement.clientHeight - 90,
                 columns: [
                 	{
                 		type: 'selection',
                 		title: '#',
-                		width:'50'
+                		width:50
                 	},
+                    {
+                        type: 'index',
+                        width: 60,
+                        align: 'center'
+                    },
                     {
                         title: '用户名',
                         key: 'username',
@@ -83,6 +119,7 @@
                     {
                         title: '拥有角色',
                         key: 'roleNames',
+                        width:400
                     },
                     {
                         title: '注册日期',
@@ -99,22 +136,11 @@
                         key: 'operation',
                         width: 150,
                         render (row, column, index) {
-                            return `{{ formatDate(tableData1[${index}].update) }}`;
+                            return '操作';
                         }
                     }
                 ]
             }
-        },
-        methods: {
-            changePage () {
-            }
-
-        },
-        beforeRouteEnter: (to, from, next) => {
-        	//后端请求数据
-        	next(vm => {
-        		vm.$store.dispatch('DoFetchUserInfo')
-        	})
         }
     }
 </script>

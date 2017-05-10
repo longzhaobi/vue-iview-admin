@@ -21,3 +21,12 @@ export function fetch(params) {
     url:`/api/users?${qs.stringify(params)}`
   });
 }
+
+export function create(params) {
+  return request({
+    url:'/api/users',
+    method:'post',
+    data:qs.stringify(params)
+  });
+}
+

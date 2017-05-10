@@ -9,7 +9,7 @@ import Layout from '@/routes/layout/Layout'
 const dashboard = resolve => require(['./routes/dashboard/index'], resolve)
 
 //系统管理
-const UserList = resolve => require(['./routes/sys/user/UserList'],resolve)
+const UserList = resolve => require(['./routes/sys/user'],resolve)
 
 Vue.use(Router)
 

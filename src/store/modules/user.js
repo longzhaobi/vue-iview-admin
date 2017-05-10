@@ -7,7 +7,7 @@ const user = {
 		data: [],
 		total: 0,
 	    current: 0,
-	    size:20,
+	    size:10,
 	    keyword:null
 	},
 
@@ -46,7 +46,12 @@ const user = {
 			return false
 		},
 		async DoFetchUserInfo({commit}, payload) {
-			const response = await api.fetch(payload)
+			const params = {
+				current:1,
+				size:10,
+				...payload
+			}
+			const response = await api.fetch(params)
 			if(response) {
 				const {data} = response;
 		        if(data) {
@@ -54,6 +59,9 @@ const user = {
 		          commit('SET_DATA', {data:data.data, total, current})
 		        }
 			}
+		},
+		async DoSaveUserInfo({commit}, payload) {
+			return await api.create(payload)
 		}
 	}
 }
