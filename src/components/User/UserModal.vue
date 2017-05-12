@@ -17,7 +17,7 @@
                     
                     <Col span="12">
                         <Form-item label="密码" prop="password">
-                            <Input v-model="formItem.password" placeholder="请输入密码"></Input>
+                            <Input v-model="formItem.password" type="password" placeholder="请输入密码"></Input>
                         </Form-item>
                     </Col>
                 </Row>
@@ -81,20 +81,28 @@
             }
         },
         mixins:[modal],
+        computed: {
+            requestUrl () {
+                return this.option === 'create' ? 'DoSaveUserInfo' : 'DoUpdateUserInfo'
+            } 
+        },
         methods: {
             ok () {
+                console.log(this.row)
                 this.$Modal.confirm({
                     title: '确认保存吗',
                     content: '<p>一些对话框内容</p><p>一些对话框内容</p>',
                     onOk: () => {
                         this.loading = true
-                        this.$store.dispatch('DoSaveUserInfo', this.formItem).then((response) => {
+                        this.dispatch(this.requestUrl, {...this.formItem, id:this.formItem.id_}).then((response) => {
                             if(response) {
                                 const {data} = response
+                                this.loading = false
                                 if(data && data.httpCode == 200) {
                                     this.show = false
-                                    this.loading = false
-                                    this.$store.dispatch(this.reloadUrl)
+                                    this.dispatch(this.reloadUrl)
+                                } else {
+                                    this.$Message.error(data.msg ? data.msg : '操作失败')
                                 }
                             }
                         })

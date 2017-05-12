@@ -18,3 +18,15 @@
 .ivu-modal-body {
 	padding:25px;
 }
+
+.ivu-table-fixed-right {
+	margin-top: 48px;
+	/*margin-right:15px;*/
+}
+
+.ivu-table-fixed {
+	margin-top: 48px;
+}
+.ivu-table-fixed-body {
+	/*height:555px !important;*/
+}

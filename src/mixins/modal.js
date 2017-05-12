@@ -14,6 +14,11 @@ const propsMixin = {
             type: String,
             default: "create"
         }
+    },
+    computed: {
+        dispatch () {
+            return this.$store ? this.$store.dispatch : this.$parent.$data.self.$store.dispatch
+        }
     }
 }
 

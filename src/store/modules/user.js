@@ -6,7 +6,7 @@ const user = {
 		menus:[],
 		data: [],
 		total: 0,
-	    current: 0,
+	    current: 1,
 	    size:20,
 	    keyword:null
 	},
@@ -64,8 +64,44 @@ const user = {
 		async DoSaveUserInfo({commit}, payload) {
 			return await api.create(payload)
 		},
+		async DoUpdateUserInfo({commit}, payload) {
+			if (payload.mtime) {
+                delete payload.mtime
+            }
+            if(payload.ctime) {
+                delete payload.ctime
+            }
+            if(payload.createId) {
+                delete payload.createId
+            }
+            if(payload.available) {
+                delete payload.available
+            }
+            if(payload.id_) {
+                delete payload.id_
+            }
+            if(payload.roleIds) {
+                delete payload.roleIds
+            }
+            if(payload.roleNames) {
+                delete payload.roleNames
+            }
+            if(payload.salt) {
+                delete payload.salt
+            }
+            if(payload._index) {
+                delete payload._index
+            }
+			return await api.update(payload)
+		},
 		async DoRemoveUserInfo({commit}, payload) {
 			return await api.remove(payload)
+		},
+		async DoFetchRoles({commit}, payload) {
+			return await api.fetchRoles()
+		},
+		async DoAuthUserInfo({commit}, {id, role}) {
+			return await api.auth(id, {roleIds:role})
 		}
 	}
 }

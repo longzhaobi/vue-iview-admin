@@ -10,7 +10,7 @@ const dashboard = resolve => require(['./routes/dashboard/index'], resolve)
 
 //系统管理
 const UserList = resolve => require(['./routes/sys/user'],resolve)
-
+const TestList = resolve => require(['./routes/sys/test'],resolve)
 Vue.use(Router)
 
 export default new Router({
@@ -30,7 +30,7 @@ export default new Router({
       component: Layout,
       children: [
       	{ path: 'user', name: '用户管理', component: UserList},
-      	{ path: 'roles', name: '角色管理' },
+      	{ path: 'role', name: '角色管理', component: TestList },
       	{ path: 'permissioins', name: '权限管理' },
       	{ path: 'resources', name: '资源管理' },
       	{ path: 'permissioins', name: '权限管理' }]

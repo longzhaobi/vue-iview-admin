@@ -1,34 +1,33 @@
 <template>
-    <div class="normal">
-        <Table :height="tableHeight":context="self" :width="tableWidth" :data="data" border :columns="columns" stripe @on-selection-change="onSelectionChange">
-            <div slot="header">
-                <Row type="flex">
-                    <Col span="12">
+	<div class="normal">
+	    <Table :height="tableHeight" :data="data" border :columns="columns" stripe @on-selection-change="onSelectionChange">
+	    	<div slot="header">
+	    		<Row type="flex">
+			        <Col span="12">
                         <UserModal title="新增用户" option="create">
                             <Button type="info" icon="plus">新增</Button>
                         </UserModal>
                         <Button type="success" icon="ios-trash" @click="deleteUser" :disabled="!hasSelected">删除</Button>
-                    </Col>
-                    <Col span="12" style="text-align:right; padding-right:10px;">
+			        </Col>
+			        <Col span="12" style="text-align:right; padding-right:10px;">
                         <Select v-model="size" style="width:80px" @on-change="changePageSize">
                             <Option v-for="item in sizeList" :value="item" :key="item">{{ item }} 条/页</Option>
                         </Select>
-                        <Input v-model="keyword" icon="search" @on-enter="onSearch" placeholder="按Enter键搜索..." style="width: 300px"></Input>
-                    </Col>
-                </Row>
+			        	<Input v-model="keyword" icon="ios-clock-outline" placeholder="请输入条件搜索..." style="width: 300px"></Input>
+			        </Col>
+			    </Row>
 
-            </div>
-            <div slot="footer" style="float:right" class="table-footer">
-                <Page :total="total" :current="current" @on-change="changePage" :page-size="size" show-elevator></Page>
-            </div>
-        </Table>
+	    	</div>
+	    	<div slot="footer" style="float:right" class="table-footer">
+	    		<Page :total="total" :current="current" @on-change="changePage" :page-size="size" show-elevator></Page>
+	    	</div>
+	    </Table>
     </div>
 </template>
 <script>
     import UserModal from './UserModal'
-    import AuthModal from './AuthModal'
     export default {
-        name: 'UserList',
+    	name: 'UserList',
         props: {
             data: {
                 type: Array,
@@ -48,13 +47,11 @@
             }
         },
         components: {
-            UserModal,
-            AuthModal
+            UserModal
         },
         mounted() {
             window.onresize = () => {
                 this.tableHeight = document.documentElement.clientHeight - 107
-                this.tableWidth = document.documentElement.clientWidth - 180
             }
         },
         methods: {
@@ -67,56 +64,51 @@
             onSelectionChange(selectedRowKeys) {
                 this.selectedRowKeys = selectedRowKeys
             },
-            onSearch() {
-                this.$store.dispatch('DoFetchUserInfo', {keyword: this.keywordd})
-            },
-            deleteUser() {
-                this.$Modal.confirm({
-                        title: '确认删除吗',
-                        content: `确定后，将删除选择的${this.selectedRowKeys.length}条记录`,
-                        onOk: () => {
-                            const ids = this.selectedRowKeys.map(row => row.id_)
-                            for (let i in ids) {
-                                this.$store.dispatch('DoRemoveUserInfo', ids[i]).then((response) => {
-                                    if(response) {
-                                        const {data} = response;
-                                        if(data && data.httpCode === 200) {
-                                            this.$Message.success( `第${parseInt(i)+1}条删除成功`);
-                                        } else {
-                                            this.$Message.error( `第${parseInt(i)+1}条删除失败`);
-                                        }
-                                    }
-                                })
-                            }
-                            this.$store.dispatch('DoFetchUserInfo')
-                        },
-                        onCancel: () => {
-                                this.loading = false
-                        }
-                });
-            }
+						deleteUser() {
+							this.$Modal.confirm({
+									title: '确认删除吗',
+									content: `确定后，将删除选择的${this.selectedRowKeys.length}条记录`,
+									onOk: () => {
+										const ids = this.selectedRowKeys.map(row => row.id_)
+										for (let i in ids) {
+											this.$store.dispatch('DoRemoveUserInfo', ids[i]).then((response) => {
+												if(response) {
+													const {data} = response;
+													if(data && data.httpCode === 200) {
+														this.$Message.success( `第${parseInt(i)+1}条删除成功`);
+													} else {
+														this.$Message.error( `第${parseInt(i)+1}条删除失败`);
+													}
+												}
+											})
+										}
+										this.$store.dispatch('DoFetchUserInfo')
+									},
+									onCancel: () => {
+											this.loading = false
+									}
+							});
+						}
 
         },
-        computed: {
-            hasSelected() {
-                return this.selectedRowKeys.length > 0
-            }
-        },
+				computed: {
+					hasSelected() {
+						return this.selectedRowKeys.length > 0
+					}
+				},
         data () {
             return {
-                self: this,
                 keyword: '',
                 sizeList:[10,20,30],
-                selectedRowKeys:[],
+								selectedRowKeys:[],
                 tableHeight: document.documentElement.clientHeight - 107,
-                tableWidth:document.documentElement.clientWidth - 180,
                 columns: [
-                    {
-                        type: 'selection',
-                        title: '#',
-                        width:50,
+                	{
+                		type: 'selection',
+                		title: '#',
+                		width:50,
                         fixed: 'left'
-                    },
+                	},
                     {
                         type: 'index',
                         width: 60,
@@ -133,7 +125,7 @@
                         key: 'gender',
                         width:80,
                         render (row, column, index) {
-                            return '你好'
+                        	return '你好'
                         }
                     },
                     {
@@ -184,17 +176,10 @@
                     {
                         title: '操作',
                         key: 'operation',
-                        width: 220,
+                        width: 150,
                         fixed: 'right',
                         render (row, column, index) {
-                            return `
-                            <auth-modal title="用户授权" :record="row" :username="row.username">
-                                <i-button type="primary" size="small">授权</i-button>
-                            </auth-modal>
-                            <user-modal title="编辑用户" :record="row" option="update">
-                                <i-button type="info" size="small">编辑</i-button>
-                            </user-modal>
-                            `;
+                            return '操作';
                         }
                     }
                 ]
@@ -205,9 +190,9 @@
 
 <style scoped>
 
-    .table-footer {
-        margin-top: 6px;
-        margin-right:30px;
-    }
+	.table-footer {
+		margin-top: 6px;
+		margin-right:30px;
+	}
 
 </style>

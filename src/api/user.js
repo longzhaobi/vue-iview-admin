@@ -36,3 +36,25 @@ export function remove(params) {
     method:'delete'
   });
 }
+
+export function fetchRoles() {
+  return request({
+    url:'/api/roles/all'
+  });
+}
+
+export function auth(id, params) {
+  return request({
+    url:`api/auths/allot/${id}`,
+    method:'post',
+    data:qs.stringify(params)
+  });
+}
+
+export function update(params) {
+  return request({
+    url:`/api/users`,
+    method:'put',
+    data:qs.stringify(params)
+  });
+}
