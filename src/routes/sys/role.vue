@@ -1,16 +1,15 @@
 <script>
-	import List from '@/components/User/List'
+	import List from '@/components/Role/List'
 	export default {
-		name: 'User',
+    name: 'Role',
 		beforeRouteEnter: (to, from, next) => {
 			//后端请求数据
 			next(vm => {
-				vm.$store.dispatch('DoFetchUser')
+				vm.$store.dispatch('DoFetchRole')
 			})
 		},
 		render(h) {
-			const {data, current, total, size} = this.$store.state.user
-
+			const {data, current, total, size} = this.$store.state.role
 			return (
 				<List data={data} current={current} total={total} size={size} />
 			)

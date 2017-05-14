@@ -9,8 +9,10 @@ import Layout from '@/routes/layout/Layout'
 const dashboard = resolve => require(['./routes/dashboard/index'], resolve)
 
 //系统管理
-const UserList = resolve => require(['./routes/sys/user'],resolve)
-const TestList = resolve => require(['./routes/sys/test'],resolve)
+const User = resolve => require(['./routes/sys/user'],resolve)
+const Permission = resolve => require(['./routes/sys/permission'],resolve)
+const Role = resolve => require(['./routes/sys/role'],resolve)
+const Resource = resolve => require(['./routes/sys/resource'],resolve)
 Vue.use(Router)
 
 export default new Router({
@@ -29,11 +31,10 @@ export default new Router({
       redirect: '/sys/user',
       component: Layout,
       children: [
-      	{ path: 'user', name: '用户管理', component: UserList},
-      	{ path: 'role', name: '角色管理', component: TestList },
-      	{ path: 'permissioins', name: '权限管理' },
-      	{ path: 'resources', name: '资源管理' },
-      	{ path: 'permissioins', name: '权限管理' }]
+      	{ path: 'user', name: '用户管理', component: User},
+      	{ path: 'role', name: '角色管理', component: Role },
+      	{ path: 'resource', name: '资源管理', component: Resource },
+      	{ path: 'permission', name: '权限管理', component: Permission }]
     }
   ]
 })

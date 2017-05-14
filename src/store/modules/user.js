@@ -46,7 +46,7 @@ const user = {
 			}
 			return false
 		},
-		async DoFetchUserInfo({commit, state}, payload) {
+		async DoFetchUser({commit, state}, payload) {
 			const params = {
 				current:state.current,
 				size:state.size,
@@ -61,40 +61,13 @@ const user = {
 		        }
 			}
 		},
-		async DoSaveUserInfo({commit}, payload) {
+		async DoSaveUser({commit}, payload) {
 			return await api.create(payload)
 		},
-		async DoUpdateUserInfo({commit}, payload) {
-			if (payload.mtime) {
-                delete payload.mtime
-            }
-            if(payload.ctime) {
-                delete payload.ctime
-            }
-            if(payload.createId) {
-                delete payload.createId
-            }
-            if(payload.available) {
-                delete payload.available
-            }
-            if(payload.id_) {
-                delete payload.id_
-            }
-            if(payload.roleIds) {
-                delete payload.roleIds
-            }
-            if(payload.roleNames) {
-                delete payload.roleNames
-            }
-            if(payload.salt) {
-                delete payload.salt
-            }
-            if(payload._index) {
-                delete payload._index
-            }
+		async DoUpdateUser({commit}, payload) {
 			return await api.update(payload)
 		},
-		async DoRemoveUserInfo({commit}, payload) {
+		async DoRemoveUser({commit}, payload) {
 			return await api.remove(payload)
 		},
 		async DoFetchRoles({commit}, payload) {

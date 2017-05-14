@@ -45,6 +45,10 @@ a:hover {
   text-decoration: none;
 }
 
+.modal_a:hover {
+  color:rgb(51,153,255);
+}
+
 .fr {
   float: right;
 }

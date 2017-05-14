@@ -1,8 +1,23 @@
+<script>
+    import modal from '@/mixins/modal'
+    export default {
+        name: 'UserFormModal',
+        data () {
+            return {
+                namespace:'User'
+            }
+        },
+        mixins:[modal],
+  			mounted () {
+  				this.formItem = {"gender": '1', ...this.row}
+  			}
+    }
+</script>
 <template>
     <span>
-        <span @click="show = true">
+        <a @click="show = true" class="modal_a">
             <slot></slot>
-        </span>
+        </a>
         <Modal
             v-model="show"
             :title="title"
@@ -14,7 +29,7 @@
                             <Input v-model="formItem.username" placeholder="请输入用户名"></Input>
                         </Form-item>
                     </Col>
-                    
+
                     <Col span="12">
                         <Form-item label="密码" prop="password">
                             <Input v-model="formItem.password" type="password" placeholder="请输入密码"></Input>
@@ -31,7 +46,7 @@
                             </Radio-group>
                         </Form-item>
                     </Col>
-                    
+
                     <Col span="12">
                         <Form-item label="邮箱" prop="email">
                             <Input v-model="formItem.email" placeholder="请输入邮箱"></Input>
@@ -45,7 +60,7 @@
                             <Input v-model="formItem.idcard" placeholder="请输入身份证号码"></Input>
                         </Form-item>
                     </Col>
-                    
+
                     <Col span="12">
                         <Form-item label="工作职位" prop="job">
                             <Input v-model="formItem.job" placeholder="请输入工作职位"></Input>
@@ -60,7 +75,7 @@
                         </Form-item>
                     </Col>
                 </Row>
-                
+
             </Form>
             <div slot="footer">
                 <Button type="text" @click="show = false">取消</Button>
@@ -69,49 +84,3 @@
         </Modal>
     </span>
 </template>
-<script>
-    import modal from '@/mixins/modal'
-    export default {
-        data () {
-            return {
-                show: false,
-                loading: false,
-                reloadUrl:'DoFetchUserInfo',
-                formItem: {gender:'1', ...this.record}
-            }
-        },
-        mixins:[modal],
-        computed: {
-            requestUrl () {
-                return this.option === 'create' ? 'DoSaveUserInfo' : 'DoUpdateUserInfo'
-            } 
-        },
-        methods: {
-            ok () {
-                console.log(this.row)
-                this.$Modal.confirm({
-                    title: '确认保存吗',
-                    content: '<p>一些对话框内容</p><p>一些对话框内容</p>',
-                    onOk: () => {
-                        this.loading = true
-                        this.dispatch(this.requestUrl, {...this.formItem, id:this.formItem.id_}).then((response) => {
-                            if(response) {
-                                const {data} = response
-                                this.loading = false
-                                if(data && data.httpCode == 200) {
-                                    this.show = false
-                                    this.dispatch(this.reloadUrl)
-                                } else {
-                                    this.$Message.error(data.msg ? data.msg : '操作失败')
-                                }
-                            }
-                        })
-                    },
-                    onCancel: () => {
-                        this.loading = false
-                    }
-                });
-            }
-        }
-    }
-</script>
