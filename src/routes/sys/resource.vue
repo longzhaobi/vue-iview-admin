@@ -12,7 +12,9 @@
 			const {data, current, total, size} = this.$store.state.resource
 
 			return (
-				<List data={data} current={current} total={total} size={size}/>
+				<div>
+					<List data={data} current={current} total={total} size={size}/>
+				</div>
 			)
 		}
 	}

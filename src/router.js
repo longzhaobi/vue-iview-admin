@@ -13,6 +13,9 @@ const User = resolve => require(['./routes/sys/user'],resolve)
 const Permission = resolve => require(['./routes/sys/permission'],resolve)
 const Role = resolve => require(['./routes/sys/role'],resolve)
 const Resource = resolve => require(['./routes/sys/resource'],resolve)
+
+//常用组件
+const Tinymce = resolve => require(['./routes/component/tinymce'], resolve)
 Vue.use(Router)
 
 export default new Router({
@@ -35,6 +38,13 @@ export default new Router({
       	{ path: 'role', name: '角色管理', component: Role },
       	{ path: 'resource', name: '资源管理', component: Resource },
       	{ path: 'permission', name: '权限管理', component: Permission }]
+    },{
+      path: '/component',
+      name: '常用组件',
+      redirect: '/component/tinymce',
+      component: Layout,
+      children: [
+        { path: 'tinymce', name: '富文本编辑器', component: Tinymce}]
     }
   ]
 })
