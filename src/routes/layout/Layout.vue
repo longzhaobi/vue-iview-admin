@@ -27,12 +27,12 @@
     beforeRouteEnter: (to, from, next) => {
       //每次加载都会进入此处判断登录是否过期
       next(vm => {
-        // vm.$store.dispatch('DoGetUserInfo').then((response) => {
-        //   if(!response) {
-        //     vm.$router.push({path: '/login'})
-        //     vm.$Message.error('登录已经过期，请重新登录', 2)
-        //   }
-        // })
+        vm.$store.dispatch('DoGetUserInfo').then((response) => {
+          if(!response) {
+            vm.$router.push({path: '/login'})
+            vm.$Message.error('登录已经过期，请重新登录', 2)
+          }
+        })
       })
     },
     mounted() {

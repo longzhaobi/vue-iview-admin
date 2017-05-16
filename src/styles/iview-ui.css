@@ -30,3 +30,23 @@
 .ivu-table-fixed-body {
 	/*height:555px !important;*/
 }
+.ivu-menu-dark {
+	background-color: rgb(50,65,87)
+}
+
+.ivu-menu-dark.ivu-menu-vertical .ivu-menu-item:hover, .ivu-menu-dark.ivu-menu-vertical .ivu-menu-submenu-title:hover {
+	background-color: rgb(72,87,107)
+}
+
+.ivu-menu-dark.ivu-menu-vertical .ivu-menu-submenu .ivu-menu-item-active, .ivu-menu-dark.ivu-menu-vertical .ivu-menu-submenu .ivu-menu-item-active:hover {
+	background-color: rgb(49,53,64) !important;
+	border-right: 3px solid #39f;
+}
+
+.ivu-menu-dark.ivu-menu-vertical .ivu-menu-opened .ivu-menu-submenu-title {
+	background-color: rgb(72,87,107)
+}
+
+.vue-image-crop-upload .vicp-wrap .vicp-step1 .vicp-drop-area {
+	height:180px !important;
+}

@@ -25,10 +25,6 @@ const propsMixin = {
     size: {
         type:Number,
         default: 20
-    },
-    namespace: {
-      type: String,
-      default:''
     }
   },
   mounted() {

@@ -16,6 +16,13 @@ const Resource = resolve => require(['./routes/sys/resource'],resolve)
 
 //常用组件
 const Tinymce = resolve => require(['./routes/component/tinymce'], resolve)
+const Markdown = resolve => require(['./routes/component/markdown'], resolve)
+const CountTo = resolve => require(['./routes/component/countTo'], resolve)
+const AvatarUpload = resolve => require(['./routes/component/AvatarUpload'], resolve)
+const Dropzone = resolve => require(['./routes/component/dropzone'], resolve)
+//错误页面
+const Err401 = resolve => require(['./routes/errorpage/401'], resolve)
+const Err404 = resolve => require(['./routes/errorpage/404'], resolve)
 Vue.use(Router)
 
 export default new Router({
@@ -44,7 +51,22 @@ export default new Router({
       redirect: '/component/tinymce',
       component: Layout,
       children: [
-        { path: 'tinymce', name: '富文本编辑器', component: Tinymce}]
+        { path: 'tinymce', name: '富文本编辑器', component: Tinymce},
+        { path: 'markdown', name: 'Markdown编辑器', component: Markdown},
+        { path: 'CountTo', name: 'countTo', component: CountTo},
+        { path: 'avatarupload', name: '头像上传', component: AvatarUpload},
+        { path: 'dropzone', name: '附件上传', component: Dropzone}
+        
+      ]
+    },{
+      path: '/errorpage',
+      name: '常用组件',
+      redirect: '/errorpage/401',
+      component: Layout,
+      children: [
+        { path: '401', name: '401', component: Err401},
+        { path: '404', name: '404', component: Err404},
+      ]
     }
   ]
 })
