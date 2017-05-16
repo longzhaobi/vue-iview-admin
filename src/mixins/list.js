@@ -12,7 +12,9 @@ const propsMixin = {
   props: {
     data: {
         type: Array,
-        default: []
+        default() {
+          return []
+        }
     },
     total: {
         type:Number,

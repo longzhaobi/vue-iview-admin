@@ -6,7 +6,7 @@
 	          <Icon type="ios-keypad"></Icon>
 	          {{menu.name}}
 	      </template>
-	      <Menu-item v-for="c in menu.children" :name="c.name" :key="c.id_"> 
+	      <Menu-item v-for="c in menu.children" :name="c.name" :key="c.id_">
 	      	<router-link :to="c.url">{{c.name}}</router-link>
 	      </Menu-item>
 	  	</Submenu>
