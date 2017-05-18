@@ -9,9 +9,11 @@
             }
         },
         mixins:[modal],
-  			mounted () {
-  				this.formItem = {menuType:'3', ...this.row}
-  			},
+        computed: {
+          formItem () {
+            return {pid:1, pids:'0/1', hasPermission:Array.of('1','2','3','4'), menuType:'3', ...this.row, weight:this.row.weight ? Number(this.row.weight): 1}
+          }
+        },
         methods: {
           showModelHandler() {
             this.dispatch('fetchPermission').then(response => {
@@ -23,6 +25,10 @@
                 }
               }
             })
+          },
+          onHandler() {
+            const param = {...this.formItem, hasPermission:this.formItem.hasPermission.join(",")}
+            this.onSubmit(param)
           }
         }
     }
@@ -65,13 +71,13 @@
               </Form-item>
               <Form-item label="资源权限" prop="hasPermission">
                   <Select v-model="formItem.hasPermission" multiple>
-                      <Option v-for="p in permission" :value="p.id_">{{p.name}}</Option>
+                      <Option v-for="p in permission" :value="p.id_" :key="p.id_">{{p.name}}</Option>
                   </Select>
               </Form-item>
             </Form>
             <div slot="footer">
                 <Button type="text" @click="show = false">取消</Button>
-                <Button type="primary" :loading="loading" @click="ok">{{loading ? '拼命中...' :'确定'}}</Button>
+                <Button type="primary" :loading="loading" @click="onHandler">{{loading ? '拼命中...' :'确定'}}</Button>
             </div>
         </Modal>
     </span>

@@ -11,7 +11,8 @@
                 keyword:'',
                 selectedRowKeys:[],
                 data:[],
-                pid:0
+                pid:0,
+                record:{}
             }
         },
         props: {
@@ -28,14 +29,34 @@
         mixins:[height],
         methods: {
           onSelectChange(value) {
-            this.pid = value[0].id
+            this.record = {pid:value[0].id_, pids:value[0].pids}
             this.data = [value[0], ...value[0].children]
           },
           onSearch(keyword) {
 
           },
-          onRemoveSelected() {
-
+          onRemove(id) {
+            this.$Modal.confirm({
+              title: '确认删除吗',
+              content: `确定后，将永久删除此条记录`,
+              onOk: () => {
+                  this.$store.dispatch('DoRemoveResource', id).then((response) => {
+                      if(response) {
+                          const {data} = response;
+                          if(data && data.httpCode === 200) {
+                              this.$Message.success( '删除成功');
+                              this.data = this.data.filter(row => row._id == id)
+                              this.$store.dispatch(`DoFetch${this.namespace}`)
+                          } else {
+                              this.$Message.error( '删除失败');
+                          }
+                      }
+                  })
+              },
+              onCancel: () => {
+                  this.loading = false
+              }
+            });
           }
         },
         computed: {
@@ -63,10 +84,9 @@
                         <FormModal title="新增资源" option="create">
                             <Button type="info" icon="plus">新增根节点</Button>
                         </FormModal>
-                        <FormModal title="新增用户" option="create">
+                        <FormModal title="新增资源" option="create" :record="record">
                             <Button type="info" icon="plus">新增</Button>
                         </FormModal>
-                        <Button type="success" icon="ios-trash" @click="onRemoveSelected" :disabled="!hasSelected">删除</Button>
                     </Col>
                 </Row>
             </div>

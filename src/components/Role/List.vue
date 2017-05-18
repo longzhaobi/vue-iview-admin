@@ -1,5 +1,6 @@
 <script>
     import FormModal from './FormModal'
+    import AuthModal from './AuthModal'
     import list from '@/mixins/list'
     import columns from './columns'
     export default {
@@ -11,7 +12,8 @@
             }
         },
         components: {
-            FormModal
+            FormModal,
+            AuthModal
         },
         mixins:[list]
     }

@@ -4,7 +4,7 @@
     </div>
 </template>
 <script>
-  import MapDashboard from './map/index';
+  import MapDashboard from './map/index'
   export default {
     name: 'dashboard',
     data() {

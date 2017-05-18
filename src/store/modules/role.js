@@ -4,9 +4,9 @@ const role = {
 	state: {
 		data: [],
 		total: 0,
-    current: 1,
-    size:20,
-    keyword:null
+	    current: 1,
+	    size:20,
+	    keyword:null
 	},
 
 	mutations: {
@@ -41,7 +41,32 @@ const role = {
 		},
 		async DoRemoveRole({commit}, payload) {
 			return await api.remove(payload)
-		}
+		},
+		async DoFetchRoleAuth({dispatch}, payload) {
+			const {roleId, pid} = payload
+			const resource = await api.fetchResources();//获取资源
+      		const columns = await api.fetchColumns();//获取权限表头
+      		if(resource && columns) {
+      			const data1 = resource.data;
+        		const data2 = columns.data;
+        		if(data1 && data2) {
+		          if(data1.httpCode === 200 && data2.httpCode === 200) {
+		          	const authRes = await api.queryAuth({roleId, pid})
+		          	if(authRes) {
+		          		const data3 = authRes.data
+		          		if(data3 && data3.httpCode === 200) {
+		          			const authData = data3.data
+		          			const treeData = data1.data
+		          			const colsData = data2.data
+		          			return {authData, treeData, colsData}
+		          		} 
+		          	}
+		          }
+		        }
+      		}
+      		return null
+		},
+
 	}
 }
 

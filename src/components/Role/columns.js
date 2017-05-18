@@ -37,12 +37,15 @@ export default [
     {
         title: '操作',
         key: 'operation',
-        width: 120,
+        width: 160,
         render (row, column, index) {
             return `
             <form-modal title="编辑权限" :record="row" option="update">
                 编辑
             </form-modal>|
+            <auth-modal :record="row">
+                授权
+            </auth-modal>|
             <a @click="onRemove(row.id_)" class="modal_a">删除</a>
             `;
         }

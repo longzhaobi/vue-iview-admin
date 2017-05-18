@@ -8,9 +8,11 @@
             }
         },
         mixins:[modal],
-  			mounted () {
-  				this.formItem = this.row
-  			}
+  			computed: {
+          formItem() {
+            return this.row
+          }
+        }
     }
 </script>
 <template>

@@ -8,9 +8,11 @@
             }
         },
         mixins:[modal],
-  			mounted () {
-  				this.formItem = {"gender": '1', ...this.row}
-  			}
+        computed: {
+          formItem() {
+            return {"gender": '1', ...this.row}
+          }
+        }
     }
 </script>
 <template>

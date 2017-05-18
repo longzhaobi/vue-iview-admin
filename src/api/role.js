@@ -29,3 +29,21 @@ export function update(params) {
     data:qs.stringify(params)
   });
 }
+
+//获取资源和权限表头
+export function fetchResources() {
+  return request({
+    url:'/api/resources'
+  });
+}
+
+export function fetchColumns() {
+  return request({
+    url:'api/permissions/columns'
+  });
+}
+export function queryAuth(params) {
+  return request({
+    url:`api/resources/auth?${qs.stringify(params)}`
+  });
+}
