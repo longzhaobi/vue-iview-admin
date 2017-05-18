@@ -1,13 +1,13 @@
 import request from '@/utils/request';
 import qs from 'qs';
 
-export async function fetch(params) {
+export function fetch(params) {
   return request({
     url:`/api/resources?${qs.stringify(params)}`
   });
 }
 
-export async function create(params) {
+export function create(params) {
   return request({
     url:'/api/resources',
     method:'post',
@@ -15,7 +15,7 @@ export async function create(params) {
   });
 }
 
-export async function update(params) {
+export function update(params) {
   return request({
     url:`/api/resources`,
     method:'put',
@@ -23,14 +23,14 @@ export async function update(params) {
   });
 }
 
-export async function remove(params) {
+export function remove(params) {
   return request({
     url:`/api/resources/${params}`,
     method:'delete'
   });
 }
 
-export async function fetchPermission() {
+export function fetchPermission() {
   return request({
     url:'/api/permissions/init'
   });

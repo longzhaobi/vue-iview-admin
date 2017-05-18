@@ -29,6 +29,9 @@ const resource = {
 		},
 		async DoRemoveResource({commit}, payload) {
 			return await api.remove(payload)
+		},
+		async fetchPermission({commit}, payload) {
+			return await api.fetchPermission()
 		}
 	}
 }

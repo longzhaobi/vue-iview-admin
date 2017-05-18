@@ -1,28 +1,40 @@
 export default [
     {
-        type: 'selection',
-        title: '#',
-        width:50
-    },
-    {
         type: 'index',
         width: 60,
+        fixed:'left',
         align: 'center'
     },
     {
-        title: '权限名称',
+        title: '资源名称',
         key: 'name',
         width:180
     },
     {
-        title: '权限标识',
-        key: 'permission',
+        title: '资源标识',
+        key: 'identity',
         width:180
+    },{
+        title: '图标',
+        key: 'icon',
+        width:180
+    },{
+        title: '资源链接',
+        key: 'url',
+        width:180
+    },{
+        title: '资源权重',
+        key: 'weight',
+        width:100
+    },{
+        title: '资源类型',
+        key: 'menuType',
+        width:100
     },
     {
-        title: '描述',
-        // width:180,
-        key: 'description'
+        title: '拥有权限',
+        width:380,
+        key: 'permissionText'
     },
     {
         title: '创建日期',
@@ -37,6 +49,7 @@ export default [
     {
         title: '操作',
         key: 'operation',
+        fixed:'right',
         width: 120,
         render (row, column, index) {
             return `

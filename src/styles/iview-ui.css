@@ -16,7 +16,8 @@
 }
 
 .ivu-modal-body {
-	padding:25px;
+	padding-left:35px;
+	padding-right:45px;
 }
 
 .ivu-table-fixed-right {
@@ -27,8 +28,12 @@
 .ivu-table-fixed {
 	margin-top: 48px;
 }
-.ivu-table-fixed-body {
-	/*height:555px !important;*/
+.ivu-table-fixed, .ivu-table-fixed-right {
+	box-shadow: none;
+	border-right:1px solid rgb(227,232,238);
+}
+.ivu-table-fixed-right {
+	border-left:1px solid rgb(227,232,238);
 }
 .ivu-menu-dark {
 	background-color: rgb(50,65,87)

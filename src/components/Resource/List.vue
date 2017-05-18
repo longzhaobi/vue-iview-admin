@@ -10,7 +10,8 @@
                 namespace: 'Resource',
                 keyword:'',
                 selectedRowKeys:[],
-                data:[]
+                data:[],
+                pid:0
             }
         },
         props: {
@@ -27,7 +28,8 @@
         mixins:[height],
         methods: {
           onSelectChange(value) {
-            this.data = value.children
+            this.pid = value[0].id
+            this.data = [value[0], ...value[0].children]
           },
           onSearch(keyword) {
 
@@ -54,10 +56,13 @@
         </div>
       </div>
       <div class="right">
-        <Table :height="clientHeight-100" :width="clientWidth-400" :data="data" border :columns="columns" stripe>
+        <Table :height="clientHeight-110" :width="clientWidth-400" :data="data" border :columns="columns" stripe>
             <div slot="header">
                 <Row type="flex">
                     <Col span="12">
+                        <FormModal title="新增资源" option="create">
+                            <Button type="info" icon="plus">新增根节点</Button>
+                        </FormModal>
                         <FormModal title="新增用户" option="create">
                             <Button type="info" icon="plus">新增</Button>
                         </FormModal>
