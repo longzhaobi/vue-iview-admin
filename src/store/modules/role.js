@@ -59,13 +59,24 @@ const role = {
 		          			const treeData = data1.data
 		          			const colsData = data2.data
 		          			return {authData, treeData, colsData}
-		          		} 
+		          		}
 		          	}
 		          }
 		        }
       		}
       		return null
 		},
+		async fetchAuthList({commit}, payload) {
+			const {roleId, pid} = payload
+			const response = await api.queryAuth({roleId, pid})
+			if(response) {
+				const {data} = response;
+				if(data && data.httpCode === 200) {
+					return data.data
+				}
+			}
+			return null
+		}
 
 	}
 }
