@@ -1,4 +1,4 @@
-<script>
+ <script>
     export default {
         name: 'RoleAuthModal',
         data () {
@@ -10,7 +10,7 @@
               authData:[],
               colsData:[],
               auths: [],
-
+              self:this,
               pid:null,
               roleId:null,
             }
@@ -24,32 +24,50 @@
           },
           datas() {
             const datas = []
-            this.auths = []
             for(let item of this.authData) {
               let obj = {}
               obj[item.name] = item.isAuth
               if(item.children) {
                 //假如有孩子，添加
-                let _self = this
                 item.children.map((child) => {
-                  let isAuth = child.isAuth ==='yes';
-                  if(child.disable === 'yes') {
-                    obj[child.name] = '<input type="checkbox" disabled="disabled"></input>';
-                  } else {
-                    //判断是否有权限的值，如果有的话假如auths数组里
-                    if(isAuth) {
-                      // _self.auths = _self.auths.push(child.value);
-                      obj[child.name] = `<input type="checkbox" value="child.value" checked="checked"></input>`;
-                    } else {
-                      obj[child.name] = `<input type="checkbox" value="child.value" ></input>`;
-                    }
-                  }
+                  obj[child.name] = child.disable + '-' + child.isAuth + '-' + child.value
                 });
               }
               datas.push(obj)
             }
-            console.log(datas);
             return datas
+          },
+          col() {
+            const col = this.colsData
+            const newCol = []
+            this.auths = []
+            for(let c of col) {
+              if(c.key !== 'pageName') {
+                c.render = (row, column, index) =>{
+                  let v = row[column.key]
+                  let vs = v.split('-')
+                  let disabled = vs[0]
+                  let isAuth = vs[1]
+                  let value = vs[2]
+                  if(disabled === 'yes') {
+                    return `<input type="checkbox" disabled="disabled"></input>`
+                  } else {
+                    if(isAuth === 'yes') {
+                      return `
+                        <input type="checkbox" name="authBox" value="${value}" checked="checked"></input>
+                      `
+                    } else {
+                      return `
+                        <input type="checkbox" names="authBox" value="${value}"></input>
+                      `
+                    }
+                    
+                  }
+                }
+              }
+              newCol.push(c)
+            }
+            return newCol
           }
         },
         props: {
@@ -69,12 +87,17 @@
                 this.treeData = treeData
                 this.authData = authData
                 this.show = true
-                console.log(authData);
               }
             })
           },
           ok() {
-
+            const checks = $('input:checkbox[name=authBox]:checked')
+            const auths = []
+            checks.each(function(i){
+              auths.push($(this).val())
+            });
+            this.auths = auths
+            
           },
           onSelectChange(row) {
             this.auths = []
@@ -87,9 +110,6 @@
                 this.authData = response
               })
             }
-          },
-          onChange() {
-
           }
         }
     }
@@ -108,7 +128,7 @@
                 <Tree :data="treeData" @on-select-change="onSelectChange"></Tree>
               </Col>
               <Col span="20" style="height:322px;border:1px solid #eee;overflow:auto">
-                <Table :columns="colsData" :data="datas" stripe border></Table>
+                <Table :content="self" :columns="col" :data="datas" stripe border></Table>
               </Col>
             </Row>
             <div slot="footer">

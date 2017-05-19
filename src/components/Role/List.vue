@@ -15,6 +15,14 @@
             FormModal,
             AuthModal
         },
+        methods: {
+            onChangeHandler () {
+                console.log(11)
+            }
+        },
+        mounted() {
+            console.log(columns)
+        },
         mixins:[list]
     }
 </script>

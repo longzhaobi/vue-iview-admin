@@ -32,7 +32,12 @@ export default [
     {
         title: '维护日期',
         key: 'mtime',
-        width:180
+        width:180,
+        render(row, column, index) {
+            return `
+                <input type="checkbox" :value="row.mtime" @click="onChangeHandler"></input>
+              `
+        }
     },
     {
         title: '操作',
